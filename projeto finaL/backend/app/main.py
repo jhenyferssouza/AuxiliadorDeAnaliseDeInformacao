@@ -2,13 +2,12 @@ import re
 from pathlib import Path
 from typing import Optional
 
-import joblib
-import pandas as pd
 from ddgs import DDGS
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+from .classificador import Classificador
 from .categoria import carregar_ctm, categorizar
 from .criticidade import montar
 from .instagram import obter_legenda_instagram
@@ -20,8 +19,7 @@ class VerificacaoEntrada(BaseModel):
 
 
 MODEL_PATH = Path(__file__).resolve().parent.parent / "modelo_pipeline_completo.pkl"
-modelo = joblib.load(MODEL_PATH)
-COLUNAS = list(modelo.feature_names_in_)  # ordem exata usada no treino
+modelo = Classificador(MODEL_PATH)
 
 MAX_CHARS = 6000
 MAX_SENTENCAS = 80
@@ -99,9 +97,8 @@ def analisar(e: Entrada):
     if not linhas:
         raise HTTPException(422, "Nenhuma sentença encontrada.")
 
-    df = pd.DataFrame(linhas)[COLUNAS]
-    probas = modelo.predict_proba(df)
-    classes = [c.item() if hasattr(c, "item") else c for c in modelo.classes_]
+    probas = modelo.proba(linhas)
+    classes = modelo.classes
 
     pos, neg = classe_positiva(classes)
     resultado = []
