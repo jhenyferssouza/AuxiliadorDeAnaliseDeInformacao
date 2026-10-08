@@ -1,0 +1,6 @@
+# OPCIONAL: só para usar o modelo CTM no cartão de assunto.
+# Sem estes pacotes (ou sem os .pkl), a API usa palavras-chave automaticamente.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+sentence-transformers
+contextualized-topic-models

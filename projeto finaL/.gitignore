@@ -1,0 +1,13 @@
+# Ambiente virtual
+backend/.venv/
+
+# Cache do Python
+__pycache__/
+*.pyc
+
+# Ambiente virtual genérico
+.venv/
+venv/
+
+# Variáveis de ambiente
+.env
