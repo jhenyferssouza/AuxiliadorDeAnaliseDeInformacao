@@ -53,7 +53,6 @@ def tipo(s: str, entidades: list[str] | None = None) -> str:
     return caracteristicas(s, entidades)[0]
 
 
-# O conteúdo pedagógico mora aqui. Edite à vontade.
 TEMPLATES = {
     "entidade": {
         "resumo": "Esta frase envolve pessoas, instituições ou lugares. Vale conferir quem são e o que de fato fizeram ou disseram.",
