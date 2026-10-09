@@ -26,7 +26,6 @@ MAX_SENTENCAS = 80
 
 app = FastAPI(title="API de análise de sentenças")
 
-# Depois do deploy, troque "*" pelo domínio da Vercel, ex.: ["https://meu-site.vercel.app"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,7 +34,7 @@ app.add_middleware(
 )
 
 
-# ---- Regras que ajustam a decisão do modelo (simples e fáceis de editar) ----
+# ---- Regras que ajustam a decisão do modelo ----
 ATRIBUICAO = re.compile(r"\b(afirm\w+|diss\w+|declar\w+|anunci\w+|revel\w+|divulg\w+|informou|informaram|"
                         r"segundo|de acordo com|aprov\w+|determin\w+|decidiu|decidiram|prendeu|prenderam|"
                         r"confirm\w+|admitiu|alegou|denunci\w+)\b", re.I)
@@ -69,7 +68,7 @@ class Entrada(BaseModel):
 
 @app.on_event("startup")
 def _preparar():
-    carregar_ctm()  # carrega o CTM uma vez (se os arquivos existirem)
+    carregar_ctm()  # carrega o CTM uma vez
 
 
 @app.get("/")
@@ -138,7 +137,7 @@ def verificar_claim(entrada: VerificacaoEntrada):
     if not fontes:
         return {"sem_fontes": True}
 
-    # 2. Apoio ao pensamento crítico por regras e templates (sem LLM)
+    # 2. Apoio ao pensamento crítico por regras e templates 
     # Entidades (pessoas, organizações, lugares) para priorizar as perguntas
     entidades = [e.text for e in nlp_full(claim).ents if e.label_ in ("PER", "ORG", "LOC")]
     return montar(claim, fontes, entidades=entidades)
