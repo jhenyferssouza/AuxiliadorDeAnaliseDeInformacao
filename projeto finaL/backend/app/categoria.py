@@ -74,7 +74,7 @@ MIN_PONTOS = 2  # palavras-chave diferentes necessárias para sugerir um assunto
 # ---------------------------------------------------------------------------
 # CTM (modelo não supervisionado treinado no notebook, 6 tópicos)
 # Os nomes abaixo foram dados olhando as palavras de cada tópico e a conferência
-# com as categorias da Folha. CONFIRA/AJUSTE se retreinar o modelo (a ordem muda!).
+# com as categorias da Folha. 
 # None = tópico genérico demais, não mostra nada (cai nas palavras-chave).
 # ---------------------------------------------------------------------------
 NOMES_TOPICOS_CTM = {
